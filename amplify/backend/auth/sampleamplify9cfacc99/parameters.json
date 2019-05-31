@@ -1,0 +1,69 @@
+{
+    "identityPoolName": "sampleamplify9cfacc99_identitypool_9cfacc99",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "sample_9cfacc99_lambda_log_policy",
+    "openIdLambdaRoleName": "sample_9cfacc99_openid_lambda_role",
+    "openIdRolePolicy": "sample_9cfacc99_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "sample_9cfacc99_openid_lambda_iam_policy",
+    "openIdLogPolicy": "sample_9cfacc99_openid_lambda_log_policy",
+    "userPoolName": "sampleamplify9cfacc99_userpool_9cfacc99",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "sample9cfacc99_sns-role",
+    "roleExternalId": "sample9cfacc99_role_external_id",
+    "policyName": "sample9cfacc99-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email",
+        "name"
+    ],
+    "userpoolClientName": "sample9cfacc99_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "sample9cfacc99_totp_lambda_role",
+    "mfaLambdaLogPolicy": "sample9cfacc99_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "sample9cfacc99_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "sample9cfacc99_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "sample9cfacc99_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "sample9cfacc99_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "sample9cfacc99_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "sampleamplify9cfacc99",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default"
+}

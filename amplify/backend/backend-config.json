@@ -1,1 +1,8 @@
-{}
+{
+	"auth": {
+		"sampleamplify9cfacc99": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

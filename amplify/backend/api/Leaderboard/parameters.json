@@ -1,5 +1,5 @@
 {
-    "AppSyncApiName": "board",
+    "AppSyncApiName": "Leaderboard",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "DynamoDBEnableServerSideEncryption": "false"
 }

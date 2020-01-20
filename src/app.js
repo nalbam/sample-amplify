@@ -30,31 +30,31 @@ async function createNewTodo() {
   }))
 }
 
-async function getData() {
-  QueryResult.innerHTML = `QUERY RESULTS`;
-  API.graphql(graphqlOperation(listTodos)).then((evt) => {
-    evt.data.listTodos.items.map((todo, i) =>
-      QueryResult.innerHTML += `<p>${todo.name} - ${todo.description}</p>`
-    );
-  })
-}
+// async function getData() {
+//   QueryResult.innerHTML = `QUERY RESULTS`;
+//   API.graphql(graphqlOperation(listTodos)).then((evt) => {
+//     evt.data.listTodos.items.map((todo, i) =>
+//       QueryResult.innerHTML += `<p>${todo.name} - ${todo.description}</p>`
+//     );
+//   })
+// }
 
-const MutationButton = document.getElementById('MutationEventButton');
-const MutationResult = document.getElementById('MutationResult');
+// const MutationButton = document.getElementById('MutationEventButton');
+// const MutationResult = document.getElementById('MutationResult');
 
-MutationButton.addEventListener('click', (evt) => {
-  MutationResult.innerHTML = `MUTATION RESULTS:`;
-  createNewTodo().then((evt) => {
-    MutationResult.innerHTML += `<p>${evt.data.createTodo.name} - ${evt.data.createTodo.description}</p>`
-  })
-});
+// MutationButton.addEventListener('click', (evt) => {
+//   MutationResult.innerHTML = `MUTATION RESULTS:`;
+//   createNewTodo().then((evt) => {
+//     MutationResult.innerHTML += `<p>${evt.data.createTodo.name} - ${evt.data.createTodo.description}</p>`
+//   })
+// });
 
-API.graphql(graphqlOperation(onCreateTodo)).subscribe({
-  next: (evt) => {
-    SubscriptionResult.innerHTML = `SUBSCRIPTION RESULTS`
-    const todo = evt.value.data.onCreateTodo;
-    SubscriptionResult.innerHTML += `<p>${todo.name} - ${todo.description}</p>`
-  }
-});
+// API.graphql(graphqlOperation(onCreateTodo)).subscribe({
+//   next: (evt) => {
+//     SubscriptionResult.innerHTML = `SUBSCRIPTION RESULTS`
+//     const todo = evt.value.data.onCreateTodo;
+//     SubscriptionResult.innerHTML += `<p>${todo.name} - ${todo.description}</p>`
+//   }
+// });
 
 getData();

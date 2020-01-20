@@ -1,6 +1,6 @@
 {
 	"api": {
-		"board": {
+		"Leaderboard": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {

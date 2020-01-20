@@ -1,0 +1,13 @@
+type Game @model {
+  league: ID!
+  title: String!
+  logo: String!
+  laptimes: [Laptime] @connection(name: "GameLaptime")
+}
+type Laptime @model {
+  id: ID!
+  email: String!
+  racerName: String!
+  lapTime: String!
+  game: Game @connection(name: "GameLaptime")
+}

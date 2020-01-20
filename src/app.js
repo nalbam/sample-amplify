@@ -42,12 +42,12 @@ async function createNewTodo() {
 // const MutationButton = document.getElementById('MutationEventButton');
 // const MutationResult = document.getElementById('MutationResult');
 
-// MutationButton.addEventListener('click', (evt) => {
-//   MutationResult.innerHTML = `MUTATION RESULTS:`;
-//   createNewTodo().then((evt) => {
-//     MutationResult.innerHTML += `<p>${evt.data.createTodo.name} - ${evt.data.createTodo.description}</p>`
-//   })
-// });
+MutationButton.addEventListener('click', (evt) => {
+  MutationResult.innerHTML = `MUTATION RESULTS:`;
+  createNewTodo().then((evt) => {
+    MutationResult.innerHTML += `<p>${evt.data.createTodo.name} - ${evt.data.createTodo.description}</p>`
+  })
+});
 
 // API.graphql(graphqlOperation(onCreateTodo)).subscribe({
 //   next: (evt) => {
@@ -57,4 +57,4 @@ async function createNewTodo() {
 //   }
 // });
 
-getData();
+// getData();

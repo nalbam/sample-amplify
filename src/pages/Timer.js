@@ -13,9 +13,9 @@ class App extends Component {
             <a href="#" id="btn_reset" className="button btn_reset">Reset</a>
             <a href="#" id="btn_clear" className="button btn_clear">Clear</a>
         </nav>
-        <div className="limiter"></div>
-        <div className="display"></div>
-        <div className="bestlap"></div>
+        <div className="limiter">00:00.000</div>
+        <div className="display">00:00.000</div>
+        <div className="bestlap">00:00.000</div>
         <ul className="results"></ul>
       </div>
     );

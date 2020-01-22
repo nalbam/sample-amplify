@@ -1,34 +1,38 @@
-import API, {
-  graphqlOperation
-} from '@aws-amplify/api'
-import PubSub from '@aws-amplify/pubsub';
+// import API, {
+//   graphqlOperation
+// } from '@aws-amplify/api'
+// import PubSub from '@aws-amplify/pubsub';
 
-import {
-  createTodo
-} from './graphql/mutations'
-import {
-  listTodos
-} from './graphql/queries'
-import {
-  onCreateTodo
-} from './graphql/subscriptions'
+import './favicon.ico';
+import './style.css';
+import './webpack.png';
 
-import awsconfig from './aws-exports';
-API.configure(awsconfig);
-PubSub.configure(awsconfig);
+// import {
+//   createTodo
+// } from './graphql/mutations'
+// import {
+//   listTodos
+// } from './graphql/queries'
+// import {
+//   onCreateTodo
+// } from './graphql/subscriptions'
 
-const QueryResult = document.getElementById('QueryResult');
-const SubscriptionResult = document.getElementById('SubscriptionResult');
+// import awsconfig from './aws-exports';
+// API.configure(awsconfig);
+// PubSub.configure(awsconfig);
 
-async function createNewTodo() {
-  const todo = {
-    name: "Use AppSync",
-    description: "Realtime and Offline"
-  }
-  return await API.graphql(graphqlOperation(createTodo, {
-    input: todo
-  }))
-}
+// const QueryResult = document.getElementById('QueryResult');
+// const SubscriptionResult = document.getElementById('SubscriptionResult');
+
+// async function createNewTodo() {
+//   const todo = {
+//     name: "Use AppSync",
+//     description: "Realtime and Offline"
+//   }
+//   return await API.graphql(graphqlOperation(createTodo, {
+//     input: todo
+//   }))
+// }
 
 // async function getData() {
 //   QueryResult.innerHTML = `QUERY RESULTS`;
@@ -42,12 +46,12 @@ async function createNewTodo() {
 // const MutationButton = document.getElementById('MutationEventButton');
 // const MutationResult = document.getElementById('MutationResult');
 
-MutationButton.addEventListener('click', (evt) => {
-  MutationResult.innerHTML = `MUTATION RESULTS:`;
-  createNewTodo().then((evt) => {
-    MutationResult.innerHTML += `<p>${evt.data.createTodo.name} - ${evt.data.createTodo.description}</p>`
-  })
-});
+// MutationButton.addEventListener('click', (evt) => {
+//   MutationResult.innerHTML = `MUTATION RESULTS:`;
+//   createNewTodo().then((evt) => {
+//     MutationResult.innerHTML += `<p>${evt.data.createTodo.name} - ${evt.data.createTodo.description}</p>`
+//   })
+// });
 
 // API.graphql(graphqlOperation(onCreateTodo)).subscribe({
 //   next: (evt) => {

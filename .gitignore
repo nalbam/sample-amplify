@@ -1,56 +1,23 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Folder config file
-Desktop.ini
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# testing
+/coverage
 
-# Windows shortcuts
-*.lnk
+# production
+/build
 
-# Mac
+# misc
 .DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Maven
-target/
-build/
-
-# Nodejs
-node_modules/
-package-lock.json
-dist/
-
-# test
-reports/
-.scannerwork
-
-# JetBrains
-.idea/
-*.iml
-
-# Eclipse
-.settings/
-.metadata/
-
-# Temp
-*.pid
-*.log
-*.tmp
-
-#amplify
-amplify/\#current-cloud-backend
-amplify/.config/local-*
-amplify/mock-data
-amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
-build/
-dist/
-node_modules/
-aws-exports.js
-awsconfiguration.json
-amplifyconfiguration.json
-amplify-gradle-config.json
-amplifyxc.config
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -15,8 +15,7 @@ import Amplify, { Analytics } from 'aws-amplify'
 import awsconfig from './aws-exports'
 Amplify.configure(awsconfig)
 
-Analytics.record('Store_Load');
-
+Analytics.record('Page_Load');
 Analytics.autoTrack('pageView', {
     enable: true,
     type: 'SPA'

@@ -1,38 +1,54 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #111;
+  color: #eee;
+  font-family: Menlo, Noto Mono;
+}
+
+figure {
+  display: block;
+  margin-block-end: 1em;
+  margin-block-start: 1em;
+  margin-inline-end: 40px;
+  margin-inline-start: 40px;
+}
+
+footer {
+  height: 100px;
+}
+
+div {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+.lb-logo {
+  display: block;
+  height: 500px;
+  line-height: 0;
+  margin: 50px 0;
+  overflow: hidden;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.lb-logo-front, .lb-logo-back {
+  height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.lb-logo-front img, .lb-logo-back img {
+  height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.lb-title {
+  height: 30px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  text-align: center;
 }

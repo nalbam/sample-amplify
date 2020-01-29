@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 
-import Amplify, { Analytics, Storage, API } from 'aws-amplify';
+// import Amplify, { Analytics, Storage, API } from 'aws-amplify'
 import { withAuthenticator, Authenticator } from 'aws-amplify-react'
-
 import signUpConfig from '../config/signUpConfig'
 
-function Submit() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Authenticator usernameAttributes='email' />
-      </header>
-      <div className="App-body">
-        Submit
-      </div>
-    </div>
-  );
+import Title from '../component/Title';
+
+class App extends Component {
+  render() {
+    return (
+      <Fragment>
+        <header className="App-header">
+          <Authenticator usernameAttributes='email' />
+        </header>
+        <header className="App-header">
+          <Title league="demo" />
+        </header>
+        <div className="App-body">
+          Submit
+        </div>
+      </Fragment>
+    );
+  }
 }
 
-// export default Submit;
-// export default withAuthenticator(Submit, true);
-export default withAuthenticator(Submit, { usernameAttributes: 'email', signUpConfig });
+// export default App;
+// export default withAuthenticator(App, true);
+export default withAuthenticator(App, { usernameAttributes: 'email', signUpConfig });

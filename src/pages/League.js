@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 
-function League() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          League
-        </p>
-      </header>
-    </div>
-  );
+import Times from '../component/Times';
+import Title from '../component/Title';
+
+class App extends Component {
+  render() {
+    // console.log(this.props.match.params.league);
+
+    return (
+      <Fragment>
+        <header className="App-header">
+          <Title league={this.props.match.params.league} />
+        </header>
+        <div className="App-body">
+          <Times league={this.props.match.params.league} />
+        </div>
+      </Fragment>
+    );
+  }
 }
 
-export default League;
+export default App;

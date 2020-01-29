@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   postLapTime = async () => {
-    console.log('calling api');
+    console.log('put api');
     const res = await API.post('apiefea82cc', '/items', {
       body: {
         league: this.props.match.params.league,

@@ -16,12 +16,12 @@ class Title extends Component {
 
   getLeague = async () => {
     // console.log('calling getLeague');
-    const response = await API.get('api39c9f475', `/leagues/object/${this.props.league}`);
-    // alert(JSON.stringify(response, null, 2));
-    if (response && response.league) {
+    const res = await API.get('api39c9f475', `/leagues/object/${this.props.league}`);
+    // alert(JSON.stringify(res, null, 2));
+    if (res && res.league) {
       this.setState({
-        logo: response.logo,
-        title: response.title,
+        logo: res.logo,
+        title: res.title,
       });
     }
   };

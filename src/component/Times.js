@@ -17,10 +17,10 @@ class Times extends Component {
 
   getTimes = async () => {
     // console.log('calling getTimes');
-    const response = await API.get('apiefea82cc', `/items/${this.props.league}`);
-    // alert(JSON.stringify(response, null, 2));
-    if (response && response.length > 0) {
-      let items = response.sort(this.compare);
+    const res = await API.get('apiefea82cc', `/items/${this.props.league}`);
+    // alert(JSON.stringify(res, null, 2));
+    if (res && res.length > 0) {
+      let items = res.sort(this.compare);
       // console.log(items);
       this.setState({
         times: items,

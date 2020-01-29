@@ -1,0 +1,5 @@
+{
+    "tableName": "sample-amplify-leagues",
+    "partitionKeyName": "league",
+    "partitionKeyType": "S"
+}

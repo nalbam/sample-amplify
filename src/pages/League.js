@@ -1,6 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
 
 function League() {
   return (
@@ -15,4 +13,3 @@ function League() {
 }
 
 export default League;
-// export default withAuthenticator(App, true);

@@ -7,7 +7,6 @@ import * as serviceWorker from './serviceWorker';
 import AppProvider from './context/AppProvider'
 
 import App from './App';
-import Timer from './pages/Timer'
 import League from './pages/League'
 import Submit from './pages/Submit'
 
@@ -26,7 +25,6 @@ const routing = (
         <Router>
             <Switch>
                 <Route exact path="/" component={App} />
-                <Route path="/timer" component={Timer} />
                 <Route path="/league/:id" component={League} />
                 <Route path="/submit/:id" component={Submit} />
                 <Route component={App} />

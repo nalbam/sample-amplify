@@ -1,44 +1,14 @@
-
-figure {
-  display: block;
-  margin-block-end: 1em;
-  margin-block-start: 1em;
-  margin-inline-end: 40px;
-  margin-inline-start: 40px;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-footer {
-  height: 100px;
+html {
+  background: #111;
+  color: #eee;
+  font-family: Menlo, Noto Mono;
 }
 
-div {
-  display: block;
-}
-
-a {
-  text-decoration: none;
-}
-
-.lb-logo {
-  display: block;
-  height: 500px;
-  line-height: 0;
-  margin: 50px 0;
-  overflow: hidden;
-  text-align: center;
-}
-
-.lb-logo-front, .lb-logo-back {
-  height: 100%;
-}
-
-.lb-logo-front img, .lb-logo-back img {
-  height: 100%;
-}
-
-.lb-title {
-  height: 30px;
-  margin-bottom: 30px;
-  margin-top: 30px;
+.App {
   text-align: center;
 }

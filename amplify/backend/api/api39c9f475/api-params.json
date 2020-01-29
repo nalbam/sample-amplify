@@ -1,0 +1,44 @@
+{
+    "paths": [
+        {
+            "name": "/leagues",
+            "lambdaFunction": "sampleamplify2bb00fac",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            }
+        }
+    ],
+    "resourceName": "api39c9f475",
+    "apiName": "api39c9f475",
+    "functionArns": [
+        {
+            "lambdaFunction": "sampleamplify2bb00fac"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-sample-amplify-demo-160241-authRole",
+        "unAuthRoleName": "amplify-sample-amplify-demo-160241-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "sampleamplify2bb00fac",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

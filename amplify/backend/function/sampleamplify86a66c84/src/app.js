@@ -183,7 +183,6 @@ app.put(path, function (req, res) {
             ':laptime': req.body.laptime,
             ':modified': datetime,
           },
-          ReturnValues: 'ALL_NEW',
         };
 
         console.log(`put-update: ${JSON.stringify(upateItemParams)}`);
@@ -278,7 +277,6 @@ app.post(path, function (req, res) {
             ':laptime': req.body.laptime,
             ':modified': datetime,
           },
-          ReturnValues: 'ALL_NEW',
         };
 
         console.log(`post-update: ${JSON.stringify(upateItemParams)}`);

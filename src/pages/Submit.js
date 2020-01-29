@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   postLapTime = async () => {
-    console.log('put api');
+    console.log('post api');
 
     const res = await API.post('apiefea82cc', '/items', {
       body: {
@@ -39,12 +39,14 @@ class App extends Component {
         laptime: this.state.laptime,
       }
     });
-    alert(JSON.stringify(res, null, 2));
-    // this.setState({
-    //   email: '',
-    //   racerName: '',
-    //   laptime: '',
-    // });
+    // alert(JSON.stringify(res, null, 2));
+    console.log('post api: ' + JSON.stringify(res, null, 2));
+
+    this.setState({
+      email: '',
+      racerName: '',
+      laptime: '',
+    });
   };
 
   setColor(e, b) {

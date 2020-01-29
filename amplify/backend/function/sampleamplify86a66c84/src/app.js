@@ -138,13 +138,11 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 *************************************/
 
 app.put(path, function (req, res) {
-  const req_body = JSON.parse(req.body);
-
-  console.log(`put: ${JSON.stringify(req_body)}`);
+  console.log(`put: ${JSON.stringify(req.body)}`);
 
   var params = {
-    'league': req_body.league,
-    'email': req_body.email,
+    'league': req.body.league,
+    'email': req.body.email,
   };
 
   // if (userIdPresent) {
@@ -160,38 +158,41 @@ app.put(path, function (req, res) {
 
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
+      console.log('Could not load items: ' + err.message);
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err.message });
     } else {
       if (data.Item) {
         // res.json(data.Item);  => update
         let a1 = data.Item.laptime.split(':');
-        let oldLapTime = ((+a1[0]) * 60) + (+a1[1]);
+        let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
 
-        let a2 = req_body.laptime.split(':');
-        let newLapTime = ((+a2[0]) * 60) + (+a2[1]);
+        let a2 = req.body.laptime.split(':');
+        let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
 
-        if (oldLapTime < newLapTime) {
-          req_body.laptime = data.Item.laptime;
+        if (oldlaptime < newlaptime) {
+          req.body.laptime = data.Item.laptime;
         }
 
-        let udateItemParams = {
+        let upateItemParams = {
           TableName: process.env.TIME_TABLE,
           Key: params,
           UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
           ExpressionAttributeValues: {
-            ':racerName': req_body.racerName,
-            ':laptime': req_body.laptime,
+            ':racerName': req.body.racerName,
+            ':laptime': req.body.laptime,
             ':modified': datetime,
           },
           ReturnValues: 'ALL_NEW',
         };
-        dynamodb.update(udateItemParams, (err, data) => {
+
+        console.log(`put-update: ${JSON.stringify(upateItemParams)}`);
+        dynamodb.update(upateItemParams, (err, data) => {
           if (err) {
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
-            res.json({ success: 'put call succeed!', url: req.url, data: data })
+            res.json({ success: 'put-update call succeed!', url: req.url, data: data })
           }
         });
       } else {
@@ -199,10 +200,10 @@ app.put(path, function (req, res) {
         let putItemParams = {
           TableName: tableName,
           Item: {
-            league: req_body.league,
-            email: req_body.email,
-            racerName: req_body.racerName,
-            lapTime: req_body.laptime,
+            league: req.body.league,
+            email: req.body.email,
+            racerName: req.body.racerName,
+            laptime: req.body.laptime,
             registered: datetime,
           },
         }
@@ -211,12 +212,13 @@ app.put(path, function (req, res) {
           putItemParams.Item['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
         }
 
+        console.log(`put-put: ${JSON.stringify(putItemParams)}`);
         dynamodb.put(putItemParams, (err, data) => {
           if (err) {
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
-            res.json({ success: 'put call succeed!', url: req.url, data: data })
+            res.json({ success: 'put-put call succeed!', url: req.url, data: data })
           }
         });
       }
@@ -229,13 +231,11 @@ app.put(path, function (req, res) {
 *************************************/
 
 app.post(path, function (req, res) {
-  const req_body = JSON.parse(req.body);
-
-  console.log(`post: ${JSON.stringify(req_body)}`);
+  console.log(`post: ${JSON.stringify(req.body)}`);
 
   var params = {
-    'league': req_body.league,
-    'email': req_body.email,
+    'league': req.body.league,
+    'email': req.body.email,
   };
 
   // if (userIdPresent) {
@@ -251,38 +251,41 @@ app.post(path, function (req, res) {
 
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
+      console.log('Could not load items: ' + err.message);
       res.statusCode = 500;
       res.json({ error: 'Could not load items: ' + err.message });
     } else {
       if (data.Item) {
         // res.json(data.Item);  => update
         let a1 = data.Item.laptime.split(':');
-        let oldLapTime = ((+a1[0]) * 60) + (+a1[1]);
+        let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
 
-        let a2 = req_body.laptime.split(':');
-        let newLapTime = ((+a2[0]) * 60) + (+a2[1]);
+        let a2 = req.body.laptime.split(':');
+        let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
 
-        if (oldLapTime < newLapTime) {
-          req_body.laptime = data.Item.laptime;
+        if (oldlaptime < newlaptime) {
+          req.body.laptime = data.Item.laptime;
         }
 
-        let udateItemParams = {
+        let upateItemParams = {
           TableName: process.env.TIME_TABLE,
           Key: params,
           UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
           ExpressionAttributeValues: {
-            ':racerName': req_body.racerName,
-            ':laptime': req_body.laptime,
+            ':racerName': req.body.racerName,
+            ':laptime': req.body.laptime,
             ':modified': datetime,
           },
           ReturnValues: 'ALL_NEW',
         };
-        dynamodb.update(udateItemParams, (err, data) => {
+
+        console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
+        dynamodb.update(upateItemParams, (err, data) => {
           if (err) {
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
-            res.json({ success: 'post call succeed!', url: req.url, data: data })
+            res.json({ success: 'post-update call succeed!', url: req.url, data: data })
           }
         });
       } else {
@@ -290,10 +293,10 @@ app.post(path, function (req, res) {
         let putItemParams = {
           TableName: tableName,
           Item: {
-            league: req_body.league,
-            email: req_body.email,
-            racerName: req_body.racerName,
-            lapTime: req_body.laptime,
+            league: req.body.league,
+            email: req.body.email,
+            racerName: req.body.racerName,
+            laptime: req.body.laptime,
             registered: datetime,
           },
         }
@@ -302,12 +305,13 @@ app.post(path, function (req, res) {
           putItemParams.Item['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
         }
 
+        console.log(`post-put: ${JSON.stringify(putItemParams)}`);
         dynamodb.put(putItemParams, (err, data) => {
           if (err) {
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
-            res.json({ success: 'post call succeed!', url: req.url, data: data })
+            res.json({ success: 'post-put call succeed!', url: req.url, data: data })
           }
         });
       }

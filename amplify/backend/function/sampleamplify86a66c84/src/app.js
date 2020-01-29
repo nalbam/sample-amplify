@@ -175,7 +175,7 @@ app.put(path, function (req, res) {
         }
 
         let upateItemParams = {
-          TableName: process.env.TIME_TABLE,
+          TableName: tableName,
           Key: params,
           UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
           ExpressionAttributeValues: {
@@ -189,6 +189,7 @@ app.put(path, function (req, res) {
         console.log(`put-update: ${JSON.stringify(upateItemParams)}`);
         dynamodb.update(upateItemParams, (err, data) => {
           if (err) {
+            console.log('put-update: ' + err.message);
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
@@ -215,6 +216,7 @@ app.put(path, function (req, res) {
         console.log(`put-put: ${JSON.stringify(putItemParams)}`);
         dynamodb.put(putItemParams, (err, data) => {
           if (err) {
+            console.log('put-put: ' + err.message);
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
@@ -268,7 +270,7 @@ app.post(path, function (req, res) {
         }
 
         let upateItemParams = {
-          TableName: process.env.TIME_TABLE,
+          TableName: tableName,
           Key: params,
           UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
           ExpressionAttributeValues: {
@@ -282,6 +284,7 @@ app.post(path, function (req, res) {
         console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
         dynamodb.update(upateItemParams, (err, data) => {
           if (err) {
+            console.log('post-update: ' + err.message);
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {
@@ -308,6 +311,7 @@ app.post(path, function (req, res) {
         console.log(`post-put: ${JSON.stringify(putItemParams)}`);
         dynamodb.put(putItemParams, (err, data) => {
           if (err) {
+            console.log('post-put: ' + err.message);
             res.statusCode = 500;
             res.json({ error: err, url: req.url, body: req.body });
           } else {

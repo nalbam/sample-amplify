@@ -30,6 +30,7 @@ class App extends Component {
 
   postLapTime = async () => {
     console.log('put api');
+
     const res = await API.post('apiefea82cc', '/items', {
       body: {
         league: this.props.match.params.league,
@@ -39,11 +40,11 @@ class App extends Component {
       }
     });
     alert(JSON.stringify(res, null, 2));
-    this.setState({
-      email: '',
-      racerName: '',
-      laptime: '',
-    })
+    // this.setState({
+    //   email: '',
+    //   racerName: '',
+    //   laptime: '',
+    // });
   };
 
   setColor(e, b) {
@@ -58,8 +59,9 @@ class App extends Component {
 
   handleChange = (e) => {
     if (e.target.name === 'email') {
-      let email_valid = this.validateEmail(e.target.value);
+      let email_valid = (e.target.value !== '') && this.validateEmail(e.target.value);
       this.setState({
+        email: e.target.value,
         email_valid: email_valid
       })
       this.setColor(e.target, email_valid);
@@ -68,14 +70,16 @@ class App extends Component {
     if (e.target.name === 'racerName') {
       let racerName_valid = (e.target.value !== '');
       this.setState({
+        racerName: e.target.value,
         racerName_valid: racerName_valid
       })
       this.setColor(e.target, racerName_valid);
     }
 
     if (e.target.name === 'laptime') {
-      let laptime_valid = this.validateTime(e.target.value);
+      let laptime_valid = (e.target.value !== '') && this.validateTime(e.target.value);
       this.setState({
+        laptime: e.target.value,
         laptime_valid: laptime_valid
       })
       this.setColor(e.target, laptime_valid);

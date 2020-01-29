@@ -138,9 +138,13 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 *************************************/
 
 app.put(path, function (req, res) {
+  const req_body = JSON.parse(req.body);
+
+  console.log(`put: ${JSON.stringify(req_body)}`);
+
   var params = {
-    'league': req.body.league,
-    'email': req.body.email,
+    'league': req_body.league,
+    'email': req_body.email,
   };
 
   // if (userIdPresent) {
@@ -164,11 +168,11 @@ app.put(path, function (req, res) {
         let a1 = data.Item.laptime.split(':');
         let oldLapTime = ((+a1[0]) * 60) + (+a1[1]);
 
-        let a2 = req.body.laptime.split(':');
+        let a2 = req_body.laptime.split(':');
         let newLapTime = ((+a2[0]) * 60) + (+a2[1]);
 
         if (oldLapTime < newLapTime) {
-          req.body.laptime = data.Item.laptime;
+          req_body.laptime = data.Item.laptime;
         }
 
         let udateItemParams = {
@@ -176,8 +180,8 @@ app.put(path, function (req, res) {
           Key: params,
           UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
           ExpressionAttributeValues: {
-            ':racerName': req.body.racerName,
-            ':laptime': req.body.laptime,
+            ':racerName': req_body.racerName,
+            ':laptime': req_body.laptime,
             ':modified': datetime,
           },
           ReturnValues: 'ALL_NEW',
@@ -195,10 +199,10 @@ app.put(path, function (req, res) {
         let putItemParams = {
           TableName: tableName,
           Item: {
-            league: req.body.league,
-            email: req.body.email,
-            racerName: req.body.racerName,
-            lapTime: req.body.laptime,
+            league: req_body.league,
+            email: req_body.email,
+            racerName: req_body.racerName,
+            lapTime: req_body.laptime,
             registered: datetime,
           },
         }
@@ -225,9 +229,13 @@ app.put(path, function (req, res) {
 *************************************/
 
 app.post(path, function (req, res) {
+  const req_body = JSON.parse(req.body);
+
+  console.log(`post: ${JSON.stringify(req_body)}`);
+
   var params = {
-    'league': req.body.league,
-    'email': req.body.email,
+    'league': req_body.league,
+    'email': req_body.email,
   };
 
   // if (userIdPresent) {
@@ -251,11 +259,11 @@ app.post(path, function (req, res) {
         let a1 = data.Item.laptime.split(':');
         let oldLapTime = ((+a1[0]) * 60) + (+a1[1]);
 
-        let a2 = req.body.laptime.split(':');
+        let a2 = req_body.laptime.split(':');
         let newLapTime = ((+a2[0]) * 60) + (+a2[1]);
 
         if (oldLapTime < newLapTime) {
-          req.body.laptime = data.Item.laptime;
+          req_body.laptime = data.Item.laptime;
         }
 
         let udateItemParams = {
@@ -263,8 +271,8 @@ app.post(path, function (req, res) {
           Key: params,
           UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
           ExpressionAttributeValues: {
-            ':racerName': req.body.racerName,
-            ':laptime': req.body.laptime,
+            ':racerName': req_body.racerName,
+            ':laptime': req_body.laptime,
             ':modified': datetime,
           },
           ReturnValues: 'ALL_NEW',
@@ -282,10 +290,10 @@ app.post(path, function (req, res) {
         let putItemParams = {
           TableName: tableName,
           Item: {
-            league: req.body.league,
-            email: req.body.email,
-            racerName: req.body.racerName,
-            lapTime: req.body.laptime,
+            league: req_body.league,
+            email: req_body.email,
+            racerName: req_body.racerName,
+            lapTime: req_body.laptime,
             registered: datetime,
           },
         }

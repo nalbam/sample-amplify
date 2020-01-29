@@ -71,7 +71,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-sample-amplify-demo-160241-deployment",
-					"S3Key": "amplify-builds/sampleamplify86a66c84-6e6946334d6159755345-build.zip"
+					"S3Key": "amplify-builds/sampleamplify86a66c84-346141374a566370655a-build.zip"
 				}
 			}
 		},

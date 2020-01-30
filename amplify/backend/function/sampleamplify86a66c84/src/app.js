@@ -174,6 +174,16 @@ app.put(path, function (req, res) {
     } else {
       if (data.Item) {
         // res.json(data.Item);  => update
+
+        if (userIdPresent) {
+          let userId = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+          if (data.Item.userId !== userId) {
+            res.statusCode = 403;
+            res.json({ error: 'Unauthorized.', url: req.url, body: req.body });
+            return;
+          }
+        }
+
         let a1 = data.Item.laptime.split(':');
         let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
 
@@ -273,6 +283,16 @@ app.post(path, function (req, res) {
     } else {
       if (data.Item) {
         // res.json(data.Item);  => update
+
+        if (userIdPresent) {
+          let userId = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+          if (data.Item.userId !== userId) {
+            res.statusCode = 403;
+            res.json({ error: 'Unauthorized.', url: req.url, body: req.body });
+            return;
+          }
+        }
+
         let a1 = data.Item.laptime.split(':');
         let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
 

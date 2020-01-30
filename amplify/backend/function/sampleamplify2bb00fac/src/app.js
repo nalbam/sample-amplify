@@ -164,6 +164,7 @@ app.put(path, function (req, res) {
 
   let datetime = new Date().getTime();
 
+  console.log(`get: ${JSON.stringify(getItemParams)}`);
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
       console.log('Could not load items: ' + err.message);
@@ -172,6 +173,16 @@ app.put(path, function (req, res) {
     } else {
       if (data.Item) {
         // res.json(data.Item);  => update
+
+        if (userIdPresent) {
+          let userId = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+          if (data.Item.userId !== userId) {
+            res.statusCode = 403;
+            res.json({ error: 'Unauthorized.', url: req.url, body: req.body });
+            return;
+          }
+        }
+
         let upateItemParams = {
           TableName: tableName,
           Key: params,
@@ -250,6 +261,7 @@ app.post(path, function (req, res) {
 
   let datetime = new Date().getTime();
 
+  console.log(`get: ${JSON.stringify(getItemParams)}`);
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
       console.log('Could not load items: ' + err.message);
@@ -258,6 +270,16 @@ app.post(path, function (req, res) {
     } else {
       if (data.Item) {
         // res.json(data.Item);  => update
+
+        if (userIdPresent) {
+          let userId = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+          if (data.Item.userId !== userId) {
+            res.statusCode = 403;
+            res.json({ error: 'Unauthorized.', url: req.url, body: req.body });
+            return;
+          }
+        }
+
         let upateItemParams = {
           TableName: tableName,
           Key: params,

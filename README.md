@@ -24,3 +24,9 @@ amplify publish
 ```
 </^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$)([^.]+$)/>    /index.html    200
 ```
+
+## rewrite
+
+```
+</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$)([^.]+$)/>    /index.html    200
+```

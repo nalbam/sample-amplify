@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/sample-amplify/static/css/main.4a0acab0.chunk.css",
+    "main.js": "/sample-amplify/static/js/main.4ef0b598.chunk.js",
+    "main.js.map": "/sample-amplify/static/js/main.4ef0b598.chunk.js.map",
+    "runtime-main.js": "/sample-amplify/static/js/runtime-main.c8a33233.js",
+    "runtime-main.js.map": "/sample-amplify/static/js/runtime-main.c8a33233.js.map",
+    "static/css/2.65b39531.chunk.css": "/sample-amplify/static/css/2.65b39531.chunk.css",
+    "static/js/2.2b5b42ad.chunk.js": "/sample-amplify/static/js/2.2b5b42ad.chunk.js",
+    "static/js/2.2b5b42ad.chunk.js.map": "/sample-amplify/static/js/2.2b5b42ad.chunk.js.map",
+    "index.html": "/sample-amplify/index.html",
+    "precache-manifest.c09ebabe7d1f6a1ce63e0376eb8be6ac.js": "/sample-amplify/precache-manifest.c09ebabe7d1f6a1ce63e0376eb8be6ac.js",
+    "service-worker.js": "/sample-amplify/service-worker.js",
+    "static/css/2.65b39531.chunk.css.map": "/sample-amplify/static/css/2.65b39531.chunk.css.map",
+    "static/css/main.4a0acab0.chunk.css.map": "/sample-amplify/static/css/main.4a0acab0.chunk.css.map",
+    "static/js/2.2b5b42ad.chunk.js.LICENSE": "/sample-amplify/static/js/2.2b5b42ad.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c8a33233.js",
+    "static/css/2.65b39531.chunk.css",
+    "static/js/2.2b5b42ad.chunk.js",
+    "static/css/main.4a0acab0.chunk.css",
+    "static/js/main.4ef0b598.chunk.js"
+  ]
+}

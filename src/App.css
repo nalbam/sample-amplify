@@ -9,9 +9,21 @@ html {
   font-family: Menlo, Noto Mono;
 }
 
+div {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+footer {
+  height: 50px;
+}
+
 .logo {
   display: block;
-  height: 200px;
+  height: 180px;
   line-height: 0;
   margin: 15px 0;
   overflow: hidden;

@@ -10,8 +10,8 @@ class Title extends Component {
   }
 
   state = {
-    logo: 'https://deepracer-logos.s3.ap-northeast-2.amazonaws.com/logo_deepracer.png',
-    title: 'DeepRacer League',
+    logo: '/icon-trophy.png',
+    title: '...',
   }
 
   getLeague = async () => {

@@ -12,7 +12,6 @@ class App extends Component {
           </div>
         </header>
         <div className="App-body">
-          -
         </div>
       </Fragment>
     );

@@ -29,9 +29,9 @@ class App extends Component {
   }
 
   postLapTime = async () => {
-    console.log('post api');
+    console.log('put api');
 
-    const res = await API.post('apiefea82cc', '/items', {
+    const res = await API.put('apiefea82cc', '/items', {
       body: {
         league: this.props.match.params.league,
         email: this.state.email,
@@ -40,7 +40,7 @@ class App extends Component {
       }
     });
     // alert(JSON.stringify(res, null, 2));
-    console.log('post api: ' + JSON.stringify(res, null, 2));
+    console.log('put api: ' + JSON.stringify(res, null, 2));
 
     this.setState({
       email: '',

@@ -58,26 +58,28 @@ const convertUrlType = (param, type) => {
 
 app.get(path + hashKeyPath, function (req, res) {
   var condition = {}
+
   condition[partitionKeyName] = {
     ComparisonOperator: 'EQ'
   }
 
-  if (userIdPresent && req.apiGateway) {
-    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
-  } else {
-    try {
-      condition[partitionKeyName]['AttributeValueList'] = [convertUrlType(req.params[partitionKeyName], partitionKeyType)];
-    } catch (err) {
-      res.statusCode = 500;
-      res.json({ error: 'Wrong column type ' + err });
-    }
+  try {
+    condition[partitionKeyName]['AttributeValueList'] = [convertUrlType(req.params[partitionKeyName], partitionKeyType)];
+  } catch (err) {
+    res.statusCode = 500;
+    res.json({ error: 'Wrong column type ' + err });
   }
+
+  // if (userIdPresent && req.apiGateway) {
+  //   condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH];
+  // }
 
   let queryParams = {
     TableName: tableName,
     KeyConditions: condition
   }
 
+  console.log(`get: ${JSON.stringify(queryParams)}`);
   dynamodb.query(queryParams, (err, data) => {
     if (err) {
       res.statusCode = 500;
@@ -94,17 +96,15 @@ app.get(path + hashKeyPath, function (req, res) {
 
 app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
   var params = {};
-  if (userIdPresent && req.apiGateway) {
-    params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  } else {
-    params[partitionKeyName] = req.params[partitionKeyName];
-    try {
-      params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
-    } catch (err) {
-      res.statusCode = 500;
-      res.json({ error: 'Wrong column type ' + err });
-    }
+
+  params[partitionKeyName] = req.params[partitionKeyName];
+  try {
+    params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
+  } catch (err) {
+    res.statusCode = 500;
+    res.json({ error: 'Wrong column type ' + err });
   }
+
   if (hasSortKey) {
     try {
       params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
@@ -114,11 +114,16 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
     }
   }
 
+  // if (userIdPresent) {
+  //   params['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  // }
+
   let getItemParams = {
     TableName: tableName,
     Key: params
   }
 
+  console.log(`get: ${JSON.stringify(getItemParams)}`);
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
       res.statusCode = 500;
@@ -138,21 +143,92 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 *************************************/
 
 app.put(path, function (req, res) {
+  var params = {};
 
-  if (userIdPresent) {
-    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  params[partitionKeyName] = req.params[partitionKeyName];
+  try {
+    params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
+  } catch (err) {
+    res.statusCode = 500;
+    res.json({ error: 'Wrong column type ' + err });
   }
 
-  let putItemParams = {
-    TableName: tableName,
-    Item: req.body
-  }
-  dynamodb.put(putItemParams, (err, data) => {
-    if (err) {
+  if (hasSortKey) {
+    try {
+      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
+    } catch (err) {
       res.statusCode = 500;
-      res.json({ error: err, url: req.url, body: req.body });
+      res.json({ error: 'Wrong column type ' + err });
+    }
+  }
+
+  // if (userIdPresent) {
+  //   params['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  // }
+
+  let getItemParams = {
+    TableName: tableName,
+    Key: params
+  }
+
+  let datetime = new Date().getTime();
+
+  dynamodb.get(getItemParams, (err, data) => {
+    if (err) {
+      console.log('Could not load items: ' + err.message);
+      res.statusCode = 500;
+      res.json({ error: 'Could not load items: ' + err.message });
     } else {
-      res.json({ success: 'put call succeed!', url: req.url, data: data })
+      if (data.Item) {
+        // res.json(data.Item);  => update
+        let upateItemParams = {
+          TableName: tableName,
+          Key: params,
+          UpdateExpression: 'SET logo = :logo, title = :title, modified = :modified',
+          ExpressionAttributeValues: {
+            ':logo': req.body.logo,
+            ':title': req.body.title,
+            ':modified': datetime,
+          },
+        };
+
+        console.log(`put-update: ${JSON.stringify(upateItemParams)}`);
+        dynamodb.update(upateItemParams, (err, data) => {
+          if (err) {
+            console.log('put-update: ' + err.message);
+            res.statusCode = 500;
+            res.json({ error: err, url: req.url, body: req.body });
+          } else {
+            res.json({ success: 'put-update call succeed!', url: req.url, data: data })
+          }
+        });
+      } else {
+        // res.json(data);  => put
+        let putItemParams = {
+          TableName: tableName,
+          Item: {
+            league: req.body.league,
+            logo: req.body.logo,
+            title: req.body.title,
+            registered: datetime,
+          },
+        }
+
+        if (userIdPresent) {
+          putItemParams.Item['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+        }
+
+        console.log(`put-put: ${JSON.stringify(putItemParams)}`);
+        dynamodb.put(putItemParams, (err, data) => {
+          if (err) {
+            console.log('put-put: ' + err.message);
+            res.statusCode = 500;
+            res.json({ error: err, url: req.url, body: req.body });
+          } else {
+            res.json({ success: 'put-put call succeed!', url: req.url, data: data })
+          }
+        });
+      }
     }
   });
 });

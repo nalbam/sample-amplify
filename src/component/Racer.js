@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-class Laptime extends Component {
+class Racer extends Component {
   constructor(props) {
     super(props);
 
@@ -12,12 +12,16 @@ class Laptime extends Component {
   }
 
   render() {
-    // <img src="/icon-trophy.png" alt="trophy" className="icon-trophy" />
+    let trophy = "";
+
+    if (this.state.rank < 4) {
+      trophy = <img src="/icon-trophy.png" alt="trophy" className="icon-trophy" />
+    }
 
     return (
       <Fragment>
         <div className="lb-row lb-rank1">
-          <div>{this.state.rank}</div>
+          <div>{trophy} {this.state.rank}</div>
           <div>{this.props.item.racerName}</div>
           <div>{this.props.item.laptime}</div>
         </div>
@@ -26,4 +30,4 @@ class Laptime extends Component {
   }
 }
 
-export default Laptime;
+export default Racer;

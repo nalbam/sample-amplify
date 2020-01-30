@@ -94,18 +94,21 @@ class Pollen extends Component {
   }
 
   animate = c => {
+    // console.log(`Pollen animate ${this.particles.length}`);
+
     if (this.particles.length === 0) {
       c.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      return;
+    } else {
+      var now = Date.now();
+      var delta = now - this.lastFrameTime;
+      if (!this.supportsAnimationFrame || delta > this.state.frameInterval) {
+        c.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        this.update();
+        this.draw(c);
+        this.lastFrameTime = now - (delta % this.state.frameInterval);
+      }
     }
-    var now = Date.now();
-    var delta = now - this.lastFrameTime;
-    if (!this.supportsAnimationFrame || delta > this.state.frameInterval) {
-      c.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      this.update();
-      this.draw(c);
-      this.lastFrameTime = now - (delta % this.state.frameInterval);
-    }
+
     requestAnimationFrame(() => this.animate(c));
   }
 

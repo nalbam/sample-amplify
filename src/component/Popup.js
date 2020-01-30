@@ -26,11 +26,13 @@ class Popup extends Component {
 
   start() {
     this.streaming = true;
+
     $('.pop-layer').fadeIn();
   }
 
   stop() {
     this.streaming = false;
+
     $('.pop-layer').fadeOut();
   }
 

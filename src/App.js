@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import './App.css';
+import './pop.css';
 
 class App extends Component {
   render() {

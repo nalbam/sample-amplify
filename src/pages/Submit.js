@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
-// import Amplify, { Analytics, Storage, API } from 'aws-amplify'
+import { API } from 'aws-amplify'
 import { withAuthenticator, Authenticator } from 'aws-amplify-react'
 import signUpConfig from '../config/signUpConfig'
-
-import { API } from 'aws-amplify'
 
 import Popup from '../component/Popup';
 import Title from '../component/Title';

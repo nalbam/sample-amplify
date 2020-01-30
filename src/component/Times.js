@@ -31,7 +31,7 @@ class Times extends Component {
   }
 
   getTimes = async () => {
-    console.log('call getTimes');
+    // console.log('call getTimes');
     const res = await API.get('apiefea82cc', `/items/${this.props.league}`);
     // alert(JSON.stringify(res, null, 2));
     if (res && res.length > 0) {

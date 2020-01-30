@@ -7,7 +7,12 @@
 			"customAuth": false
 		}
 	},
-	"hosting": {},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation"
+		}
+	},
 	"analytics": {
 		"sampleamplify": {
 			"service": "Pinpoint",

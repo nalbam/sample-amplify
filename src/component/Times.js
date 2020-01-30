@@ -42,6 +42,13 @@ class Times extends Component {
   reloaded(res) {
     let items = res.sort(this.compare);
 
+    if (items.length < this.state.items.length) {
+      this.setState({
+        items: items,
+      });
+      return;
+    }
+
     let isNew = false;
     if (this.state.items.length > 0 && items.length > this.state.items.length) {
       // if (items.length > this.state.items.length) {
@@ -79,8 +86,6 @@ class Times extends Component {
     if (racerName) {
       console.log(`new ${rank} ${racerName} ${laptime}`);
 
-      // scroll(rank);
-
       if (isNew) {
         this.setState({
           popTitle: 'New Challenger!',
@@ -101,7 +106,7 @@ class Times extends Component {
   }
 
   popup(rank) {
-    // this.scroll();
+    this.scroll(rank);
 
     this.setState({
       pollen: true,
@@ -132,6 +137,10 @@ class Times extends Component {
     );
 
     // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
+  }
+
+  scroll(rank) {
+
   }
 
   compare(a, b) {

@@ -19,7 +19,6 @@ class App extends Component {
         <div className="App-body">
           <Times league={this.props.match.params.league} />
         </div>
-        <script src="/assets/confetti.min.js"></script>
       </Fragment>
     );
   }

@@ -11,7 +11,7 @@ class Title extends Component {
 
   state = {
     logo: '/icon-trophy.png',
-    title: '...',
+    title: '',
   }
 
   getLeague = async () => {

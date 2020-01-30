@@ -2,11 +2,9 @@ import React, { Component, Fragment } from 'react';
 
 import { API } from 'aws-amplify'
 
+import Pollen from './Pollen';
 import Popup from './Popup';
 import Racer from './Racer';
-
-import $ from 'jquery';
-// window.$ = window.jQuery = jQuery;
 
 class Times extends Component {
   constructor(props) {
@@ -17,13 +15,23 @@ class Times extends Component {
 
   state = {
     items: [],
-    popTitle: '',
+    pollen: false,
     popRacer: '',
     popTime: '',
+    popTitle: '',
+    popup: false,
+  }
+
+  componentDidMount() {
+    this.intervalId = setInterval(this.getTimes.bind(this), 10000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   getTimes = async () => {
-    // console.log('calling getTimes');
+    console.log('call getTimes');
     const res = await API.get('apiefea82cc', `/items/${this.props.league}`);
     // alert(JSON.stringify(res, null, 2));
     if (res && res.length > 0) {
@@ -36,6 +44,7 @@ class Times extends Component {
 
     let isNew = false;
     if (this.state.items.length > 0 && items.length > this.state.items.length) {
+      // if (items.length > this.state.items.length) {
       isNew = true;
     }
 
@@ -62,6 +71,11 @@ class Times extends Component {
       items: items,
     });
 
+    // // TODO REMOVE
+    // rank = 1;
+    // racerName = 'nalbam';
+    // laptime = '00:00.000';
+
     if (racerName) {
       console.log(`new ${rank} ${racerName} ${laptime}`);
 
@@ -82,35 +96,42 @@ class Times extends Component {
         popTime: laptime,
       });
 
-      this.popup();
+      this.popup(rank);
     }
   }
 
-  popup() {
-    // confetti.start(5000);
+  popup(rank) {
+    // this.scroll();
 
-    setTimeout(function () {
-      $('.pop-layer').fadeIn();
+    this.setState({
+      pollen: true,
+    });
 
-      setTimeout(function () {
-        $('.pop-layer').fadeOut();
+    setTimeout(
+      function () {
+        this.setState({
+          popup: true,
+        });
+      }.bind(this), 1000
+    );
 
-        // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
+    setTimeout(
+      function () {
+        this.setState({
+          pollen: false,
+        });
+      }.bind(this), 5000
+    );
 
-        // pop_title.innerText = '';
-        // pop_racer.innerText = '';
-        // pop_racer.classList.remove(`pop-rank${rank}`);
-        // pop_time.innerText = '';
-      }, 7000);
-    }, 1000);
-  }
+    setTimeout(
+      function () {
+        this.setState({
+          popup: false,
+        });
+      }.bind(this), 6000
+    );
 
-  popNewRacer() {
-
-  }
-
-  popNewRecord() {
-
+    // $(`.lb-rank${rank}>div:nth-child(n+2) span`).fadeOut().fadeIn().fadeOut().fadeIn();
   }
 
   compare(a, b) {
@@ -118,19 +139,12 @@ class Times extends Component {
     let b1 = b.laptime.split(':');
     let a2 = ((+a1[0]) * 60) + (+a1[1]);
     let b2 = ((+b1[0]) * 60) + (+b1[1]);
-    // let a2 = this.sec2num(a.laptime);
-    // let b2 = this.sec2num(b.laptime);
     if (a2 < b2) {
       return -1;
     } else if (a2 > b2) {
       return 1;
     }
     return 0;
-  }
-
-  sec2num(t) {
-    let a = t.split(':');
-    return ((+a[0]) * 60) + (+a[1]);
   }
 
   render() {
@@ -155,7 +169,9 @@ class Times extends Component {
           </div>
         </div>
 
-        <Popup title={this.state.popTitle} racer={this.state.popRacer} time={this.state.popTime} />
+        <Pollen status={this.state.pollen} />
+
+        <Popup status={this.state.popup} title={this.state.popTitle} racer={this.state.popRacer} time={this.state.popTime} />
 
         <footer className="lb-footer"></footer>
       </Fragment>

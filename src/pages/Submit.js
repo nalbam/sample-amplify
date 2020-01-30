@@ -6,16 +6,18 @@ import signUpConfig from '../config/signUpConfig'
 
 import { API } from 'aws-amplify'
 
+import Popup from '../component/Popup';
 import Title from '../component/Title';
 
 class App extends Component {
   state = {
-    email: '',
-    racerName: '',
-    laptime: '',
     email_valid: false,
-    racerName_valid: false,
+    email: '',
     laptime_valid: false,
+    laptime: '',
+    popup: false,
+    racerName_valid: false,
+    racerName: '',
   }
 
   validateEmail(val) {
@@ -29,9 +31,9 @@ class App extends Component {
   }
 
   postLapTime = async () => {
-    console.log('put api');
+    console.log('post api');
 
-    const res = await API.put('apiefea82cc', '/items', {
+    const res = await API.post('apiefea82cc', '/items', {
       body: {
         league: this.props.match.params.league,
         email: this.state.email,
@@ -40,7 +42,19 @@ class App extends Component {
       }
     });
     // alert(JSON.stringify(res, null, 2));
-    console.log('put api: ' + JSON.stringify(res, null, 2));
+    console.log('post api: ' + JSON.stringify(res, null, 2));
+
+    this.setState({
+      popup: true,
+    });
+
+    setTimeout(
+      function () {
+        this.setState({
+          popup: false,
+        });
+      }.bind(this), 3000
+    );
 
     this.setState({
       email: '',
@@ -105,7 +119,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <header className="App-header">
+        <header className="App-header auth">
           <Authenticator usernameAttributes='email' />
         </header>
         <header className="App-header">
@@ -117,15 +131,15 @@ class App extends Component {
             <div className="lb-submit">
               <div className="lb-row">
                 <div>Email</div>
-                <div><input type="text" name="email" value={this.state.name} onChange={this.handleChange} className="lb-email text_normal" autoComplete="off" maxLength="256" /></div>
+                <div><input type="text" name="email" value={this.state.email} placeholder="" onChange={this.handleChange} className="lb-email text_normal" autoComplete="off" maxLength="256" /></div>
               </div>
               <div className="lb-row">
                 <div>Name</div>
-                <div><input type="text" name="racerName" value={this.state.racerName} onChange={this.handleChange} className="lb-name text_normal" autoComplete="off" maxLength="32" /></div>
+                <div><input type="text" name="racerName" value={this.state.racerName} placeholder="" onChange={this.handleChange} className="lb-name text_normal" autoComplete="off" maxLength="32" /></div>
               </div>
               <div className="lb-row">
                 <div>Time</div>
-                <div><input type="text" name="laptime" value={this.state.laptime} onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="9" /></div>
+                <div><input type="text" name="laptime" value={this.state.laptime} placeholder="00:00.000" onChange={this.handleChange} className="lb-time text_normal" autoComplete="off" maxLength="9" /></div>
               </div>
               <div className="lb-row">
                 <div></div>
@@ -134,6 +148,8 @@ class App extends Component {
             </div>
           </form>
         </div>
+
+        <Popup status={this.state.popup} racer="Saved!" />
       </Fragment>
     );
   }

@@ -21,6 +21,10 @@ footer {
   height: 50px;
 }
 
+.auth {
+  color: #555;
+}
+
 .logo {
   display: block;
   height: 180px;
@@ -186,4 +190,12 @@ footer {
   vertical-align: middle;
   width: 250px;
   height: 40px;
+}
+
+.pollen {
+  display: block;
+  z-index: 999999;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
 }

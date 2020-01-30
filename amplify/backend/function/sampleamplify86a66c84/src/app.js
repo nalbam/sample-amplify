@@ -144,22 +144,14 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function (req, res) {
 
 app.put(path, function (req, res) {
   var params = {};
-
-  params[partitionKeyName] = req.params[partitionKeyName];
   try {
-    params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
+    params = {
+      league: req.body.league,
+      email: req.body.email,
+    };
   } catch (err) {
     res.statusCode = 500;
     res.json({ error: 'Wrong column type ' + err });
-  }
-
-  if (hasSortKey) {
-    try {
-      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
-    } catch (err) {
-      res.statusCode = 500;
-      res.json({ error: 'Wrong column type ' + err });
-    }
   }
 
   // if (userIdPresent) {
@@ -173,6 +165,7 @@ app.put(path, function (req, res) {
 
   let datetime = new Date().getTime();
 
+  console.log(`get: ${JSON.stringify(getItemParams)}`);
   dynamodb.get(getItemParams, (err, data) => {
     if (err) {
       console.log('Could not load items: ' + err.message);
@@ -249,21 +242,96 @@ app.put(path, function (req, res) {
 *************************************/
 
 app.post(path, function (req, res) {
-
-  if (userIdPresent) {
-    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  var params = {};
+  try {
+    params = {
+      league: req.body.league,
+      email: req.body.email,
+    };
+  } catch (err) {
+    res.statusCode = 500;
+    res.json({ error: 'Wrong column type ' + err });
   }
 
-  let putItemParams = {
+  // if (userIdPresent) {
+  //   params['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  // }
+
+  let getItemParams = {
     TableName: tableName,
-    Item: req.body
+    Key: params
   }
-  dynamodb.put(putItemParams, (err, data) => {
+
+  let datetime = new Date().getTime();
+
+  console.log(`get: ${JSON.stringify(getItemParams)}`);
+  dynamodb.get(getItemParams, (err, data) => {
     if (err) {
+      console.log('Could not load items: ' + err.message);
       res.statusCode = 500;
-      res.json({ error: err, url: req.url, body: req.body });
+      res.json({ error: 'Could not load items: ' + err.message });
     } else {
-      res.json({ success: 'post call succeed!', url: req.url, data: data })
+      if (data.Item) {
+        // res.json(data.Item);  => update
+        let a1 = data.Item.laptime.split(':');
+        let oldlaptime = ((+a1[0]) * 60) + (+a1[1]);
+
+        let a2 = req.body.laptime.split(':');
+        let newlaptime = ((+a2[0]) * 60) + (+a2[1]);
+
+        if (oldlaptime < newlaptime) {
+          req.body.laptime = data.Item.laptime;
+        }
+
+        let upateItemParams = {
+          TableName: tableName,
+          Key: params,
+          UpdateExpression: 'SET racerName = :racerName, laptime = :laptime, modified = :modified',
+          ExpressionAttributeValues: {
+            ':racerName': req.body.racerName,
+            ':laptime': req.body.laptime,
+            ':modified': datetime,
+          },
+        };
+
+        console.log(`post-update: ${JSON.stringify(upateItemParams)}`);
+        dynamodb.update(upateItemParams, (err, data) => {
+          if (err) {
+            console.log('post-update: ' + err.message);
+            res.statusCode = 500;
+            res.json({ error: err, url: req.url, body: req.body });
+          } else {
+            res.json({ success: 'post-update call succeed!', url: req.url, data: data })
+          }
+        });
+      } else {
+        // res.json(data);  => put
+        let putItemParams = {
+          TableName: tableName,
+          Item: {
+            league: req.body.league,
+            email: req.body.email,
+            racerName: req.body.racerName,
+            laptime: req.body.laptime,
+            registered: datetime,
+          },
+        }
+
+        if (userIdPresent) {
+          putItemParams.Item['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+        }
+
+        console.log(`post-put: ${JSON.stringify(putItemParams)}`);
+        dynamodb.put(putItemParams, (err, data) => {
+          if (err) {
+            console.log('post-put: ' + err.message);
+            res.statusCode = 500;
+            res.json({ error: err, url: req.url, body: req.body });
+          } else {
+            res.json({ success: 'post-put call succeed!', url: req.url, data: data })
+          }
+        });
+      }
     }
   });
 });

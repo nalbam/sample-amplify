@@ -26,9 +26,6 @@ const routing = (
         <Router>
             <Switch>
                 <Route exact path="/" component={App} />
-                <Route path="/create" component={Create} />
-                <Route path="/league/:league" component={League} />
-                <Route path="/submit/:league" component={Submit} />
                 <Route component={App} />
             </Switch>
         </Router>

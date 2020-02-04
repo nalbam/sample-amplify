@@ -1,7 +1,0 @@
-{
-    "tableName": "sample-amplify-times",
-    "partitionKeyName": "league",
-    "partitionKeyType": "S",
-    "sortKeyName": "email",
-    "sortKeyType": "S"
-}
